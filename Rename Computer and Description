@@ -1,0 +1,9 @@
+/*
+Created by: Guy Ford
+A script that renames a computer name and Description
+*/
+
+Rename-computer –computername “COMPUTER_NAME” –newname “NEW_COMPUTER_NAME” –domaincredential DOMAIN\USERNAME –force –restart
+
+Set-ADObject "CN=IL-"COMPUTER_NAME",OU=Store,OU=Lab-P10,DC=il,DC=ema,DC=ad,DC=pwcinternal,DC=com" -Description 'Description'
+
