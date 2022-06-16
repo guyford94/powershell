@@ -8,8 +8,95 @@
 4.לאחר שסידרנו את השם מחשב לוחצים על OK
 5.המחשב שהזנו יבצע ריסטארט שם המחשב ישתנה בהתאם לשם משתמש שהזנתם והדיסקריפשין יעודכן לפי 
 	מספר קסלמן שהוזן דגם שהוזן Win10 20h2 
+ 
 
 
 
-עדכון הסקריפט:
-בשורה 77 ניתן לשנות את מה יכנס לדסקריפשן 
+
+[reflection.assembly]::LoadWithPartialName("System.windows.forms") 
+$basicForm = New-Object System.Windows.Forms.Form
+$textKK = New-Object System.Windows.Forms.TextBox
+$textKK.Location = '23,23'
+$textKK.Size = '150,23'
+$textKK.Text = 'Enter computer KK'
+$basicForm.controls.Add($textKK)
+
+$textMODEL = New-Object System.Windows.Forms.TextBox
+$textMODEL.Location = '23,63'
+$textMODEL.Size = '150,23'
+$textMODEL.Text = 'Enter computer model'
+$basicForm.controls.Add($textMODEL)
+
+$textUSERNAME = New-Object System.Windows.Forms.TextBox
+$textUSERNAME.Location = '23,103'
+$textUSERNAME.Size = '150,23'
+$textUSERNAME.Text = 'User name'
+$basicForm.controls.Add($textUSERNAME)
+
+
+
+$ButtonCheckComputerName = New-Object System.Windows.Forms.Button
+$ButtonCheckComputerName.Location = '196,23'
+$ButtonCheckComputerName.Text = 'chek'
+$basicForm.controls.Add($ButtonCheckComputerName)
+
+$ButtonOK = New-Object System.Windows.Forms.Button
+$ButtonOK.Location = '196,63'
+$ButtonOK.Text = 'OK'
+$basicForm.controls.Add($ButtonOK)
+
+$ButtonCheckComputerName.Add_click({
+$textKKv = $textKK.Text
+$textMODELv = $textMODEL.Text
+$textUSERNAMEv = $textUSERNAME.Text
+
+
+
+$OldComputerNmae = "IL-" + $textMODELv  + "-" + $textKKv
+$suernamme = whoami
+$name = $textUSERNAMEv.ToUpper()
+$ComputerName = "IL-10"+$name
+Get-ADComputer -Identity $ComputerName
+
+    if ($?)
+    {
+    Add-Type -AssemblyName PresentationFramework
+
+     [System.Windows.MessageBox]::Show('The computer name is already exists Choose another name ')
+    }
+    else{
+    Add-Type -AssemblyName PresentationFramework
+
+        [System.Windows.MessageBox]::Show('The computer name is good to use Click OK to change the computer name')  
+         
+    
+    }
+})
+
+
+$ButtonOK.Add_click({
+$textKKv = $textKK.Text
+$textMODELv = $textMODEL.Text
+$textUSERNAMEv = $textUSERNAME.Text
+
+
+
+$OldComputerNmae = "IL-" + $textMODELv  + "-" + $textKKv
+$suernamme = whoami
+$name = $textUSERNAMEv.ToUpper()
+$ComputerName = "IL-10"+$name
+
+
+    Rename-computer -ComputerName $OldComputerNmae -NewName $ComputerName -DomainCredential $suernamme -force -restart
+    Start-Sleep -Seconds 5
+    $dis = $textKKv + " " + $textMODELv + "Win10 20h2"
+
+    Set-ADObject "CN=$ComputerName,OU=Store,OU=Lab-P10,DC=il,DC=ema,DC=ad,DC=pwcinternal,DC=com" -Description $dis
+
+
+})
+$basicForm.ShowDialog()
+
+
+
+
