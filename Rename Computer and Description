@@ -1,9 +1,15 @@
-/*
-Created by: Guy Ford
-A script that renames a computer name and Description
-*/
+הסקריפט פווארשל בשם PowershellForm נועד לשינוי שם המחשב והכנסת המידע לדיסקריפשין
+לפני ההרצה יש לחבר את המחשב לרשת (לא חייב להיכנס עם חשבון)
+1. מריצים את הסקריפט כפווארשל
+2.בחלון שנפתח יש להזין מספר קסלמן ,דגם מחשב ,ושם משתמש(לא משנה אותיות גדולות או קטנות)
+3.לחיצה על chek - בודקת האם יש שם מחשב לפי הפורמט IL-10username שהזנת
+	אם יש מחשב כזה תתקבל הודעה שקיים שם מחשב כזה - ניתן להוסיף מספר לשם משתמש וכך ליצור את המחשב
+	אם אין שם מחשב כזה תתקבל הודעה שלא קיים מחשב עם השם הזה
+4.לאחר שסידרנו את השם מחשב לוחצים על OK
+5.המחשב שהזנו יבצע ריסטארט שם המחשב ישתנה בהתאם לשם משתמש שהזנתם והדיסקריפשין יעודכן לפי 
+	מספר קסלמן שהוזן דגם שהוזן Win10 20h2 
 
-Rename-computer –computername “COMPUTER_NAME” –newname “NEW_COMPUTER_NAME” –domaincredential DOMAIN\USERNAME –force –restart
 
-Set-ADObject "CN=IL-"COMPUTER_NAME",OU=Store,OU=Lab-P10,DC=il,DC=ema,DC=ad,DC=pwcinternal,DC=com" -Description 'Description'
 
+עדכון הסקריפט:
+בשורה 77 ניתן לשנות את מה יכנס לדסקריפשן 
